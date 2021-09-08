@@ -1,9 +1,10 @@
 //TODO: Import libraries as needed
-import java.util.NoSuchElementException;
+import java.io.*;
+import java.util.*;
 
 public class SortedCollection {
 	// TODO: Add member variables or methods as needed
-
+	private Vector<Integer> numVec = new Vector<Integer>(0);
 	/**
 	 * Adds the number n to the collection.
 	 * 
@@ -11,6 +12,7 @@ public class SortedCollection {
 	 * @return always returns true
 	 */
 	public boolean add(int n) {
+		numVec.add(n);
 		// TODO: Implement
 		return true;
 	}
@@ -23,7 +25,27 @@ public class SortedCollection {
 	 */
 	public int remove() throws NoSuchElementException {
 		// TODO: Implement
-		return 0;
+		int smallest;
+		int smallpos=0;
+		if(numVec.isEmpty()){
+			throw new NoSuchElementException("No elements present");
+		}
+		else{
+			smallest=numVec.get(0);
+			for (int i = 0; i<numVec.size(); i++){
+				if(i+1==numVec.size()){
+					break;
+				}
+				else{
+					if(numVec.get(i+1)<smallest){
+						smallest=numVec.get(i+1);
+						smallpos=i+1;
+					}
+				}
+			}
+			numVec.remove(smallpos);
+			return smallest;
+		}
 	}
 
 	/**
@@ -47,7 +69,20 @@ public class SortedCollection {
 		}
 		
 		// TODO: add numbers in commandline arguments to collection using the add(int) method.
-		// If any commandline argument is not a number, call showUsage() and return.
+		// If any commandline argument is not a number, call showUsage() and return.;
+	;
+		for(int i=0;i<args.length;i++){
+			try{
+				int num = Integer.parseInt(args[i]);
+			}catch (NumberFormatException NaN){
+				showUsage();
+				return;
+			}
+		}
+		
+		for(int i=0;i<args.length;i++){
+			collection.add(Integer.parseInt(args[i]));
+		}
 		
 		System.out.print("sorted: ");
 		for (int i = 0; i < args.length; i++) {
